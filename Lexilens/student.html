@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - LexiLens</title>
+  <!-- load google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lexend:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- top navigation bar -->
+  <header class="top-navbar">
+    <a href="student.html" class="brand-logo">
+      <div class="brand-icon-svg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          <circle cx="12" cy="8" r="2.5"></circle>
+        </svg>
+      </div>
+      <span class="brand-name">LexiLens</span>
+      <span class="brand-badge">Student Portal</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="reader.html" class="btn btn-sm btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Adaptive Reader</span>
+      </a>
+      <button class="btn btn-sm btn-secondary" onclick="openStudentProfileModal()" id="btn-student-profile">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Profile</span>
+      </button>
+      <div class="user-badge" id="student-badge-wrap" onclick="openStudentProfileModal()" style="cursor: pointer;" title="View Profile">
+        <div class="user-avatar" id="student-avatar-initial">S</div>
+        <span id="student-header-name">Student</span>
+      </div>
+      <button class="btn btn-sm btn-danger" onclick="handleLogout()">
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="student-container">
+    <!-- welcome header section -->
+    <div class="welcome-header">
+      <div>
+        <h1 class="welcome-title">
+          Welcome back, <span id="welcome-name">Student</span>!
+        </h1>
+        <p>
+          Your personal learning space. Complete these 3 gentle activities to discover your strengths.
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <span class="badge badge-neutral" id="student-class-badge">Class: Grade 6</span>
+        <span class="badge badge-neutral" id="student-roll-badge">Roll: 101</span>
+      </div>
+    </div>
+
+    <!-- overview card row -->
+    <div class="overview-card-row">
+      <!-- progress circle card -->
+      <div class="glass-card progress-card">
+        <h3 style="font-size: 1rem; margin-bottom: 4px;">Completed Tasks</h3>
+
+        <div class="progress-circle-wrap">
+          <svg viewBox="0 0 100 100">
+            <circle class="circle-bg" cx="50" cy="50" r="40" />
+            <circle class="circle-progress" id="progress-svg-circle" cx="50" cy="50" r="40" stroke-dasharray="251.2"
+              stroke-dashoffset="251.2" />
+          </svg>
+          <div class="circle-text" id="completed-count-text">0 / 3</div>
+        </div>
+
+        <p id="progress-encouragement" style="font-size: 0.84rem; color: var(--text-soft);">
+          Start your first activity below!
+        </p>
+      </div>
+
+      <!-- summary status card -->
+      <div class="glass-card status-summary-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span
+              style="font-size: 0.8rem; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px;">
+              Learning Support Status
+            </span>
+            <span class="badge badge-neutral" id="overall-status-badge">
+              <span class="badge-icon">○</span> Not Screened Yet
+            </span>
+          </div>
+
+          <h2 id="summary-headline" style="font-size: 1.35rem; margin-bottom: 8px;">
+            Your Learning Adventure Starts Here
+          </h2>
+          <p id="summary-remark" style="font-size: 0.95rem; line-height: 1.65; color: var(--text-soft);">
+            Every brain processes words, sounds, and patterns in its own unique way. Take these quick exercises so
+            LexiLens can tune the Adaptive Reader just for you.
+          </p>
+        </div>
+
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border); margin-top: 16px;">
+          <span style="font-size: 0.82rem; color: var(--text-soft);" id="last-tested-date">
+            Last test: No tests taken yet
+          </span>
+          <span style="font-size: 0.82rem; color: var(--primary); font-weight: 600;">
+            100% Private to you
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- activities vertical list -->
+    <h2 style="font-size: 1.3rem; margin-bottom: var(--space-16);">Screening Activities</h2>
+    <div class="activities-list">
+      <!-- 1 letter flip row -->
+      <div class="activity-row">
+        <div class="activity-row-main">
+          <div class="activity-row-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="4 7 4 4 20 4 20 7"></polyline>
+              <line x1="9" y1="20" x2="15" y2="20"></line>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+          </div>
+          <div class="activity-row-body">
+            <h3>1. Letter-Flip Challenge</h3>
+            <p>Spot quick differences between confusing pairs like b/d, p/q, and was/saw to identify letter reversals.
+            </p>
+          </div>
+        </div>
+        <div class="activity-row-actions">
+          <span class="badge badge-neutral" id="status-badge-letterFlip">
+            <span class="badge-icon">○</span> Not Started
+          </span>
+          <button class="btn btn-primary" onclick="openActivityModal('letterFlip')">
+            <span>Start Activity</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2 focus tracking row -->
+      <div class="activity-row">
+        <div class="activity-row-main">
+          <div class="activity-row-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </div>
+          <div class="activity-row-body">
+            <h3>2. Focus Tracking Task</h3>
+            <p>Keep your pointer smoothly on a moving guide for 30 seconds. Measures sustained visual-motor attention.
+            </p>
+          </div>
+        </div>
+        <div class="activity-row-actions">
+          <span class="badge badge-neutral" id="status-badge-focus">
+            <span class="badge-icon">○</span> Not Started
+          </span>
+          <button class="btn btn-primary" onclick="openActivityModal('focus')">
+            <span>Start Activity</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 typing rhythm row -->
+      <div class="activity-row">
+        <div class="activity-row-main">
+          <div class="activity-row-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+              <line x1="6" y1="8" x2="6" y2="8"></line>
+              <line x1="10" y1="8" x2="10" y2="8"></line>
+              <line x1="14" y1="8" x2="14" y2="8"></line>
+              <line x1="18" y1="8" x2="18" y2="8"></line>
+              <line x1="6" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="18" y2="12"></line>
+              <line x1="7" y1="16" x2="17" y2="16"></line>
+            </svg>
+          </div>
+          <div class="activity-row-body">
+            <h3>3. Typing Rhythm Test</h3>
+            <p>Type a calm sentence at your own pace. Screens for typing rhythm, hesitation pauses, and corrections.</p>
+          </div>
+        </div>
+        <div class="activity-row-actions">
+          <span class="badge badge-neutral" id="status-badge-typing">
+            <span class="badge-icon">○</span> Not Started
+          </span>
+          <button class="btn btn-primary" onclick="openActivityModal('typing')">
+            <span>Start Activity</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- reader shortcut banner -->
+    <div class="reader-banner">
+      <div>
+        <h3 style="font-size: 1.2rem; margin-bottom: 4px;">Need to read school notes or a book?</h3>
+        <p style="font-size: 0.92rem; color: var(--text-soft);">
+          Open the Adaptive Reader to adjust tints, fonts, letter spacing, turn on the Reading Ruler, or use read-aloud
+          voice.
+        </p>
+      </div>
+      <a href="reader.html" class="btn btn-accent btn-lg">
+        <span>Open Adaptive Reader</span>
+        <span>→</span>
+      </a>
+    </div>
+  </main>
+
+  <!-- activity runner modal -->
+  <div id="activity-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="closeActivityModal()" aria-label="Close modal">✕</button>
+      <div id="modal-test-content">
+        <!-- populated dynamically by tests js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- student self profile modal -->
+  <div id="modal-student-self-profile" class="modal-overlay">
+    <div class="modal-container" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="closeStudentProfileModal()" aria-label="Close modal">✕</button>
+
+      <div style="text-align: center; margin-bottom: 22px;">
+        <div class="user-avatar" id="profile-modal-avatar"
+          style="width: 64px; height: 64px; font-size: 1.6rem; margin: 0 auto 12px auto; background: var(--primary);">S</div>
+        <h2 id="profile-modal-name-display" style="font-size: 1.35rem; margin-bottom: 4px;">Student Profile</h2>
+        <span class="badge badge-success">Active Student</span>
+      </div>
+
+      <form id="form-update-student-profile" onsubmit="handleUpdateStudentProfile(event)">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="profile-input-name">Full Name</label>
+          <input type="text" id="profile-input-name" class="form-input" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="profile-input-email">Email Address</label>
+          <input type="email" id="profile-input-email" class="form-input" readonly
+            style="background: var(--surface-soft); cursor: not-allowed;" title="Email cannot be changed">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="profile-input-password">Account Password</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="profile-input-password" class="form-input" style="padding-right: 42px;" placeholder="Password" required>
+            <button type="button" onclick="togglePasswordVisibility('profile-input-password', this)" style="position: absolute; right: 8px; background: none; border: none; cursor: pointer; color: var(--text-soft); padding: 4px; display: flex; align-items: center;" title="Show or hide password" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label class="form-label" for="profile-input-class">Class / Grade</label>
+            <input type="text" id="profile-input-class" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="profile-input-roll">Roll Number</label>
+            <input type="text" id="profile-input-roll" class="form-input" required>
+          </div>
+        </div>
+
+        <div
+          style="background: var(--surface-soft); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.88rem; color: var(--text-soft);">Completed Screenings:</span>
+          <strong id="profile-modal-tests-count" style="font-size: 0.92rem; color: var(--primary);">0 / 3 Tasks Done</strong>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeStudentProfileModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- script dependencies -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/tests.js"></script>
+  <script>
+    // protect student page
+    const studentUser = protectPage("student");
+
+    // helper status badge formatter
+    function getStatusBadgeHtml(score) {
+      if (score >= 75) {
+        return `<span class="badge badge-success"><span class="badge-icon">✓</span> ${score}/100 • On Track</span>`;
+      } else if (score >= 50) {
+        return `<span class="badge badge-warning"><span class="badge-icon">▲</span> ${score}/100 • Needs Attention</span>`;
+      } else {
+        return `<span class="badge badge-danger"><span class="badge-icon">●</span> ${score}/100 • Needs Support</span>`;
+      }
+    }
+
+    // update student portal view
+    function updateStudentDashboardUI() {
+      if (!studentUser) return;
+
+      // set profile information
+      document.getElementById("student-header-name").textContent = studentUser.name;
+      document.getElementById("student-avatar-initial").textContent = studentUser.name.charAt(0).toUpperCase();
+      document.getElementById("welcome-name").textContent = studentUser.name;
+      document.getElementById("student-class-badge").textContent = `Class: ${studentUser.studentClass || "Grade 6"}`;
+      document.getElementById("student-roll-badge").textContent = `Roll: ${studentUser.rollNo || "101"}`;
+
+      // initialize test runner
+      initTestRunner(studentUser.id);
+
+      // fetch latest result
+      const latest = getLatestResult(studentUser.id);
+      let completedCount = 0;
+
+      if (latest) {
+        const badges = [
+          { score: latest.letterFlipScore, badgeId: "status-badge-letterFlip" },
+          { score: latest.focusScore, badgeId: "status-badge-focus" },
+          { score: latest.typingScore, badgeId: "status-badge-typing" }
+        ];
+
+        badges.forEach(item => {
+          const badgeEl = document.getElementById(item.badgeId);
+          if (badgeEl && item.score !== null && item.score !== undefined) {
+            completedCount++;
+            badgeEl.outerHTML = `<span id="${item.badgeId}">${getStatusBadgeHtml(item.score)}</span>`;
+          }
+        });
+
+        // update overall badge
+        const overallBadge = document.getElementById("overall-status-badge");
+        const summaryHeadline = document.getElementById("summary-headline");
+        const summaryRemark = document.getElementById("summary-remark");
+        const lastDate = document.getElementById("last-tested-date");
+
+        if (overallBadge) {
+          overallBadge.outerHTML = `<span id="overall-status-badge">${getStatusBadgeHtml(latest.overallScore)}</span>`;
+        }
+
+        if (summaryHeadline) {
+          if (latest.overallScore >= 75) {
+            summaryHeadline.textContent = "You're Doing Wonderfully!";
+          } else if (latest.overallScore >= 50) {
+            summaryHeadline.textContent = "Steady Progress & Great Focus!";
+          } else {
+            summaryHeadline.textContent = "Tailored Support is Here for You!";
+          }
+        }
+
+        if (summaryRemark && latest.remark) {
+          summaryRemark.textContent = latest.remark;
+        }
+
+        if (lastDate && latest.date) {
+          lastDate.textContent = `Last screened on: ${latest.date}`;
+        }
+      }
+
+      // update progress ring
+      const countEl = document.getElementById("completed-count-text");
+      const encouragementEl = document.getElementById("progress-encouragement");
+      const circleEl = document.getElementById("progress-svg-circle");
+
+      if (countEl) countEl.textContent = `${completedCount} / 3`;
+
+      const circumference = 2 * Math.PI * 40; // 251.2
+      const offset = circumference - (completedCount / 3) * circumference;
+      if (circleEl) {
+        circleEl.style.strokeDashoffset = offset;
+      }
+
+      if (encouragementEl) {
+        if (completedCount === 3) {
+          encouragementEl.textContent = "All 3 screenings complete! Great work!";
+        } else if (completedCount > 0) {
+          encouragementEl.textContent = `${3 - completedCount} more to complete full screening!`;
+        } else {
+          encouragementEl.textContent = "Start your first activity below!";
+        }
+      }
+    }
+
+    // toggle password visibility helper
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+      } else {
+        input.type = "password";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+      }
+    }
+
+    // open student profile modal
+    function openStudentProfileModal() {
+      if (!studentUser) return;
+      const modal = document.getElementById("modal-student-self-profile");
+      if (!modal) return;
+
+      const nameInput = document.getElementById("profile-input-name");
+      const emailInput = document.getElementById("profile-input-email");
+      const passInput = document.getElementById("profile-input-password");
+      const classInput = document.getElementById("profile-input-class");
+      const rollInput = document.getElementById("profile-input-roll");
+      const avatarEl = document.getElementById("profile-modal-avatar");
+      const nameDisplay = document.getElementById("profile-modal-name-display");
+      const testsCountEl = document.getElementById("profile-modal-tests-count");
+
+      if (nameInput) nameInput.value = studentUser.name || "";
+      if (emailInput) emailInput.value = studentUser.email || "";
+      if (passInput) {
+        passInput.value = studentUser.password || "student123";
+        passInput.type = "password";
+      }
+      if (classInput) classInput.value = studentUser.studentClass || "Grade 6";
+      if (rollInput) rollInput.value = studentUser.rollNo || "101";
+      if (avatarEl) avatarEl.textContent = (studentUser.name || "S").charAt(0).toUpperCase();
+      if (nameDisplay) nameDisplay.textContent = studentUser.name || "Student Profile";
+
+      // count completed screenings
+      const latest = getLatestResult(studentUser.id);
+      let done = 0;
+      if (latest) {
+        if (latest.letterFlipScore !== null && latest.letterFlipScore !== undefined) done++;
+        if (latest.focusScore !== null && latest.focusScore !== undefined) done++;
+        if (latest.typingScore !== null && latest.typingScore !== undefined) done++;
+      }
+      if (testsCountEl) testsCountEl.textContent = `${done} / 3 Tasks Done`;
+
+      modal.classList.add("active");
+    }
+
+    // close student profile modal
+    function closeStudentProfileModal() {
+      const modal = document.getElementById("modal-student-self-profile");
+      if (modal) modal.classList.remove("active");
+    }
+
+    // handle update student profile
+    function handleUpdateStudentProfile(e) {
+      e.preventDefault();
+      if (!studentUser) return;
+
+      const newName = document.getElementById("profile-input-name").value.trim();
+      const newPass = document.getElementById("profile-input-password").value.trim();
+      const newClass = document.getElementById("profile-input-class").value.trim();
+      const newRoll = document.getElementById("profile-input-roll").value.trim();
+
+      if (!newName || !newClass || !newRoll) {
+        showToast("Please fill all required fields", "warning");
+        return;
+      }
+
+      if (!newPass || newPass.length < 4) {
+        showToast("Password must be at least 4 characters", "warning");
+        return;
+      }
+
+      studentUser.name = newName;
+      studentUser.password = newPass;
+      studentUser.studentClass = newClass;
+      studentUser.rollNo = newRoll;
+
+      // save current user session
+      setCurrentUser(studentUser);
+
+      // update in users storage
+      const users = getAllUsers();
+      const idx = users.findIndex(u => u.id === studentUser.id);
+      if (idx >= 0) {
+        users[idx].name = newName;
+        users[idx].password = newPass;
+        users[idx].studentClass = newClass;
+        users[idx].rollNo = newRoll;
+        setData("lexilens_users", users);
+      }
+
+      updateStudentDashboardUI();
+      closeStudentProfileModal();
+      showToast("Profile updated successfully!", "success");
+    }
+
+    // load on start
+    window.addEventListener("DOMContentLoaded", updateStudentDashboardUI);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive Reader - LexiLens</title>
+  <!-- load google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="reader-page-body">
+
+  <!-- top navigation bar -->
+  <header class="top-navbar">
+    <a href="reader.html" class="brand-logo">
+      <div class="brand-icon-svg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          <circle cx="12" cy="8" r="2.5"></circle>
+        </svg>
+      </div>
+      <span class="brand-name">LexiLens</span>
+      <span class="brand-badge">Adaptive Reader</span>
+    </a>
+
+    <div class="nav-actions">
+      <button id="btn-auto-adjust" class="btn btn-sm btn-primary">
+        <span>Auto-Adjust</span>
+      </button>
+      <a href="student.html" class="btn btn-sm btn-outline" id="nav-back-portal">
+        <span>← Student Portal</span>
+      </a>
+      <button class="btn btn-sm btn-danger" onclick="handleLogout()">
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="reader-layout">
+    <!-- collapsible controls sidebar -->
+    <aside class="reader-sidebar" id="reader-sidebar">
+      <div class="reader-sidebar-content">
+        <!-- top corner sidebar header with arrow -->
+        <div class="sidebar-header-row">
+          <div>
+            <h3 class="sidebar-header-title">Reader Tuning</h3>
+            <p class="sidebar-header-sub">Customize the reading canvas live.</p>
+          </div>
+          <button id="btn-sidebar-collapse" class="sidebar-arrow-btn" type="button" title="Hide Sidebar" aria-label="Hide Sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- font style selection -->
+        <div class="sidebar-group">
+          <div class="sidebar-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 7 4 4 20 4 20 7"></polyline>
+              <line x1="9" y1="20" x2="15" y2="20"></line>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+            <span>Font Style</span>
+          </div>
+          <select id="select-font" class="form-select">
+            <option value="dyslexic">Dyslexia-Friendly (Weighted letters)</option>
+            <option value="system">Clear Atkinson Sans-Serif</option>
+            <option value="serif">High-Contrast Serif</option>
+            <option value="mono">Monospace (Fixed Width)</option>
+          </select>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- typography sliders list -->
+        <div class="sidebar-group">
+          <div class="sidebar-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="21" y1="10" x2="3" y2="10"></line>
+              <line x1="21" y1="6" x2="3" y2="6"></line>
+              <line x1="21" y1="14" x2="3" y2="14"></line>
+              <line x1="21" y1="18" x2="3" y2="18"></line>
+            </svg>
+            <span>Spacing & Size</span>
+          </div>
+
+          <!-- font size slider -->
+          <div>
+            <div class="slider-row">
+              <span>Font Size</span>
+              <span class="slider-val-badge" id="val-font-size">20px</span>
+            </div>
+            <input type="range" class="range-input" id="slider-font-size" min="14" max="36" step="1" value="20" aria-label="Font size slider">
+          </div>
+
+          <!-- letter spacing slider -->
+          <div>
+            <div class="slider-row">
+              <span>Letter Spacing</span>
+              <span class="slider-val-badge" id="val-letter-spacing">2px</span>
+            </div>
+            <input type="range" class="range-input" id="slider-letter-spacing" min="0" max="8" step="1" value="2" aria-label="Letter spacing slider">
+          </div>
+
+          <!-- word spacing slider -->
+          <div>
+            <div class="slider-row">
+              <span>Word Spacing</span>
+              <span class="slider-val-badge" id="val-word-spacing">4px</span>
+            </div>
+            <input type="range" class="range-input" id="slider-word-spacing" min="0" max="16" step="1" value="4" aria-label="Word spacing slider">
+          </div>
+
+          <!-- line height slider -->
+          <div>
+            <div class="slider-row">
+              <span>Line Height</span>
+              <span class="slider-val-badge" id="val-line-height">1.8</span>
+            </div>
+            <input type="range" class="range-input" id="slider-line-height" min="1.2" max="2.6" step="0.1" value="1.8" aria-label="Line height slider">
+          </div>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- 6 student tint options -->
+        <div class="sidebar-group">
+          <div class="sidebar-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a10 10 0 0 1 0 20Z"></path>
+            </svg>
+            <span>Background Tint</span>
+          </div>
+          <div class="theme-presets">
+            <button type="button" class="theme-preset-btn theme-cream active-theme" data-theme="cream" title="Warm Cream #FAF3E0">Cream</button>
+            <button type="button" class="theme-preset-btn theme-blue" data-theme="blue" title="Pale Blue #E3F2FD">Pale Blue</button>
+            <button type="button" class="theme-preset-btn theme-green" data-theme="green" title="Soft Green #E6F4EA">Soft Green</button>
+            <button type="button" class="theme-preset-btn theme-peach" data-theme="peach" title="Peach #FDEBE3">Peach</button>
+            <button type="button" class="theme-preset-btn theme-yellow" data-theme="yellow" title="Soft Yellow #FFF8C6">Soft Yellow</button>
+            <button type="button" class="theme-preset-btn theme-grey" data-theme="grey" title="Light Grey #F1F1F1">Light Grey</button>
+          </div>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- reading aids toggles -->
+        <div class="sidebar-group">
+          <div class="sidebar-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>Visual Aids</span>
+          </div>
+          
+          <div class="switch-row">
+            <label class="switch-label">
+              <span>Reading Ruler Line</span>
+              <input type="checkbox" id="toggle-ruler" class="switch-input" checked>
+              <div class="switch-slider"></div>
+            </label>
+          </div>
+
+          <div class="switch-row">
+            <label class="switch-label">
+              <span>Read Only One Line (Focus Mode)</span>
+              <input type="checkbox" id="toggle-focus-mode" class="switch-input">
+              <div class="switch-slider"></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <!-- text to speech controls -->
+        <div class="sidebar-group">
+          <div class="sidebar-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <span>Audio Reader</span>
+          </div>
+
+          <div>
+            <div class="slider-row">
+              <span>Voice Speed</span>
+              <span class="slider-val-badge" id="val-speech-rate">1.0x</span>
+            </div>
+            <input type="range" class="range-input" id="slider-speech-rate" min="0.5" max="1.5" step="0.1" value="1.0" aria-label="Speech rate slider">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 8px;">
+            <button id="btn-tts-play" class="btn btn-sm btn-primary">Read Aloud</button>
+            <button id="btn-tts-pause" class="btn btn-sm btn-secondary">Pause</button>
+            <button id="btn-tts-stop" class="btn btn-sm btn-outline">Stop</button>
+          </div>
+        </div>
+
+        <!-- sidebar footer note -->
+        <div class="reader-sidebar-footer">
+          <span class="screening-pill">Screening tool, not a diagnosis</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- right reading area -->
+    <main class="reader-main">
+      <!-- corner arrow button to show sidebar when collapsed -->
+      <button id="btn-sidebar-expand" class="sidebar-arrow-btn sidebar-expand-arrow" type="button" title="Show Sidebar" aria-label="Show Sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- paste text panel -->
+      <div class="text-input-panel">
+        <label class="form-label" for="reader-input-textarea" style="font-size: 0.85rem; color: var(--text);">
+          Paste any passage or notes to read:
+        </label>
+        <textarea id="reader-input-textarea" class="form-textarea" rows="3" placeholder="Paste your school notes, articles, or book chapters here..."></textarea>
+        
+        <div class="text-input-actions">
+          <button id="btn-load-sample" class="btn btn-sm btn-secondary" type="button">
+            <span>Load Sample Story</span>
+          </button>
+          <button id="btn-apply-text" class="btn btn-sm btn-primary" type="button">
+            <span>Apply Text</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- focus mode bar -->
+      <div id="focus-mode-controls" class="focus-mode-bar" style="display: none;">
+        <div>
+          <span style="font-weight: 600; color: var(--text);">Focus Sentence:</span>
+          <span id="focus-sentence-indicator" style="font-size: 0.88rem; color: var(--primary); margin-left: 8px; font-weight: 600;">1 / 5</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="btn-focus-prev" class="btn btn-sm btn-secondary">← Previous</button>
+          <button id="btn-focus-next" class="btn btn-sm btn-secondary">Next →</button>
+        </div>
+      </div>
+
+      <!-- adaptive reading display canvas -->
+      <div class="display-box-container">
+        <!-- reading ruler strip -->
+        <div id="reading-ruler-overlay" class="reading-ruler"></div>
+
+        <!-- rendered text box -->
+        <div id="reader-display-box" class="reader-display">
+          <!-- dynamically populated by js reader -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- page footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <span><strong>LexiLens Companion:</strong> Custom font weighting, letter spacing, and tints reduce visual stress and phonological decoding effort. This is a screening, not a diagnosis.</span>
+      <span class="footer-copy">© LexiLens Education</span>
+    </div>
+  </footer>
+
+  <!-- script dependencies -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/reader.js"></script>
+  <script>
+    // protect reader page
+    const currentUser = protectPage();
+
+    // adjust back link
+    if (currentUser && currentUser.role === "teacher") {
+      const backLink = document.getElementById("nav-back-portal");
+      if (backLink) {
+        backLink.textContent = "← Teacher Dashboard";
+        backLink.href = "teacher.html";
+      }
+    }
+
+    // sidebar corner toggle logic
+    const layout = document.querySelector(".reader-layout");
+    const sidebar = document.getElementById("reader-sidebar");
+    const collapseBtn = document.getElementById("btn-sidebar-collapse");
+    const expandBtn = document.getElementById("btn-sidebar-expand");
+
+    function setSidebarCollapsed(collapsed) {
+      if (!sidebar) return;
+      if (collapsed) {
+        sidebar.classList.add("collapsed");
+        if (layout) layout.classList.add("sidebar-collapsed");
+        if (expandBtn) expandBtn.style.display = "inline-flex";
+      } else {
+        sidebar.classList.remove("collapsed");
+        if (layout) layout.classList.remove("sidebar-collapsed");
+        if (expandBtn) expandBtn.style.display = "none";
+      }
+    }
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener("click", () => setSidebarCollapsed(true));
+    }
+    if (expandBtn) {
+      expandBtn.addEventListener("click", () => setSidebarCollapsed(false));
+    }
+
+    // initialize reader
+    window.addEventListener("DOMContentLoaded", () => {
+      initAdaptiveReader(currentUser ? currentUser.id : null);
+    });
+  </script>
+</body>
+</html>

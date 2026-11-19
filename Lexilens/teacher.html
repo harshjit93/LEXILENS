@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard - LexiLens</title>
+  <!-- load google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lexend:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+    <!-- fixed left sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a href="teacher.html" class="brand-logo">
+          <div class="brand-icon-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              <circle cx="12" cy="8" r="2.5"></circle>
+            </svg>
+          </div>
+          <span class="brand-name">LexiLens</span>
+          <span class="brand-badge">Educator</span>
+        </a>
+      </div>
+
+      <!-- teacher profile block -->
+      <div class="sidebar-user" onclick="openTeacherProfileModal()" style="cursor: pointer;" title="View & Edit Educator Profile">
+        <div class="user-avatar" id="teacher-avatar">T</div>
+        <div class="user-info" style="overflow: hidden;">
+          <div
+            style="font-weight: 600; font-size: 0.88rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
+            id="teacher-name-sidebar">
+            Prof. Sarah Jenkins
+          </div>
+          <div style="font-size: 0.74rem; color: var(--text-soft);">Lead Educator</div>
+        </div>
+      </div>
+
+      <!-- sidebar navigation links -->
+      <nav class="sidebar-nav">
+        <a href="#section-overview" class="nav-item active">
+          <div class="nav-icon-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <span>Overview</span>
+        </a>
+        <a href="#section-students" class="nav-item">
+          <div class="nav-icon-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <span>All Students</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item" id="nav-teacher-profile" onclick="openTeacherProfileModal()">
+          <div class="nav-icon-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span>My Profile</span>
+        </a>
+      </nav>
+
+      <!-- footer sidebar actions -->
+      <div class="sidebar-footer">
+        <button class="btn btn-sm btn-danger" style="width: 100%; justify-content: flex-start; font-size: 0.8rem;"
+          onclick="handleLogout()">
+          <span class="btn-icon-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- main dashboard area -->
+    <main class="dashboard-main">
+      <!-- top bar educator -->
+      <div class="dashboard-header">
+        <div class="header-title-group">
+          <h1>Educator Screening Dashboard</h1>
+          <p style="font-size: 0.95rem; color: var(--text-soft);">
+            Track attention drift, letter confusion, typing flow, and suggested accommodations.
+          </p>
+        </div>
+
+        <div class="header-actions">
+          <button id="btn-teacher-profile" class="btn btn-primary btn-sm" onclick="openTeacherProfileModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>My Profile</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- overview stat cards -->
+      <section id="section-overview" style="margin-bottom: var(--space-32);">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Total Students</span>
+              <span class="stat-value" id="stat-total-students">0</span>
+              <span class="stat-sub">Enrolled in roster</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Screenings Done</span>
+              <span class="stat-value" id="stat-total-tests">0</span>
+              <span class="stat-sub">Completed activities</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Needs Support</span>
+              <span class="stat-value" id="stat-needs-attention" style="color: var(--warning);">0</span>
+              <span class="stat-sub">Flagged for pacing</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Average Score</span>
+              <span class="stat-value" id="stat-avg-score" style="color: var(--primary);">0%</span>
+              <span class="stat-sub">Classwide index</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- canvas charts row -->
+        <div class="charts-grid">
+          <!-- bar chart card -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 style="font-size: 1.05rem;">Activity Averages</h3>
+                <p style="font-size: 0.8rem; color: var(--text-soft);">Classwide mean score across the 4 screening tasks
+                </p>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="canvas-bar-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- donut chart card -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 style="font-size: 1.05rem;">Support Distribution</h3>
+                <p style="font-size: 0.8rem; color: var(--text-soft);">Student breakdown across support tiers</p>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="canvas-donut-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- student roster section -->
+      <section id="section-students">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-16); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-size: 1.35rem;">Student Screening Roster</h2>
+            <p style="font-size: 0.88rem; color: var(--text-soft);">Click any student name to inspect their timeline &
+              add remarks in the slide-in panel.</p>
+          </div>
+        </div>
+
+        <!-- filters toolbar -->
+        <div class="table-controls">
+          <div class="search-box">
+            <span class="search-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" id="search-student-input" class="form-input"
+              placeholder="Search by name, roll no, or email...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-risk-select" class="form-select" style="min-width: 150px;">
+              <option value="all">All Support Tiers</option>
+              <option value="on-track">On Track (≥ 75)</option>
+              <option value="attention">Needs Attention (50 - 74)</option>
+              <option value="support">Needs Support (< 50)</option>
+            </select>
+
+            <select id="filter-class-select" class="form-select" style="min-width: 130px;">
+              <option value="all">All Classes</option>
+              <option value="Grade 6">Grade 6</option>
+              <option value="Grade 7">Grade 7</option>
+            </select>
+
+            <select id="sort-student-select" class="form-select" style="min-width: 150px;">
+              <option value="name-asc">Sort: Name (A-Z)</option>
+              <option value="name-desc">Sort: Name (Z-A)</option>
+              <option value="score-high">Score: High to Low</option>
+              <option value="score-low">Score: Low to High</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- striped sticky table -->
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Roll / Class</th>
+                <th>Activities (R / L / F / T)</th>
+                <th>Overall Index</th>
+                <th>Support Tier</th>
+                <th>Last Screened</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="students-table-body">
+              <!-- populated dynamically by dashboard js -->
+            </tbody>
+          </table>
+
+          <!-- empty search state -->
+          <div id="table-empty-state" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <div class="empty-state-title">No Students Match Your Filters</div>
+            <div class="empty-state-desc">Try clearing the search query or adjusting your support dropdown filters.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- student profile slide in side panel -->
+  <div id="student-profile-modal" class="modal-overlay">
+    <div class="modal-container profile-modal">
+      <button class="modal-close-btn" onclick="closeStudentProfile()" aria-label="Close side panel">✕</button>
+
+      <!-- student header details -->
+      <div class="profile-header-card">
+        <div class="profile-main-info">
+          <div class="profile-avatar-large" id="modal-student-avatar">S</div>
+          <div>
+            <h2 id="modal-student-name" style="font-size: 1.35rem; margin-bottom: 2px;">Student Name</h2>
+            <p id="modal-student-email" style="font-size: 0.85rem; color: var(--text-soft); margin-bottom: 6px;">
+              email@demo.com</p>
+            <div style="display: flex; gap: 8px;">
+              <span class="badge badge-neutral" id="modal-student-class">Grade 6</span>
+              <span class="badge badge-neutral">Roll: <span id="modal-student-roll">101</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right;">
+          <div
+            style="font-size: 0.76rem; color: var(--text-soft); text-transform: uppercase; margin-bottom: 4px; font-weight: 600;">
+            Support Index</div>
+          <div style="font-size: 1.6rem; font-weight: 700; color: var(--text);" id="modal-overall-score">85 / 100</div>
+          <span class="badge badge-success" id="modal-level-badge" style="margin-top: 4px;">
+            <span class="badge-icon">✓</span> On Track
+          </span>
+        </div>
+      </div>
+
+      <!-- skill progress bars -->
+      <h4
+        style="font-size: 0.88rem; margin-bottom: 12px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px;">
+        Skill Breakdown:
+      </h4>
+      <div class="skill-bars-grid">
+        <div class="skill-bar-item">
+          <div class="skill-bar-labels">
+            <span>Letter Recognition</span>
+            <strong id="val-skill-letter">0%</strong>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" id="skill-bar-letter" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-bar-item">
+          <div class="skill-bar-labels">
+            <span>Focus Tracking</span>
+            <strong id="val-skill-focus">0%</strong>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" id="skill-bar-focus" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-bar-item">
+          <div class="skill-bar-labels">
+            <span>Typing Flow</span>
+            <strong id="val-skill-typing">0%</strong>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" id="skill-bar-typing" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- progression over time chart -->
+      <div style="margin-bottom: var(--space-24);">
+        <h4
+          style="font-size: 0.88rem; margin-bottom: 8px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px;">
+          Screening Progression Over Time:
+        </h4>
+        <div
+          style="position: relative; width: 100%; height: 170px; background: var(--surface-soft); border: 1px solid var(--border); border-radius: 8px;">
+          <canvas id="canvas-history-line"></canvas>
+        </div>
+      </div>
+
+      <!-- recommended accommodations -->
+      <div class="accommodations-box">
+        <div style="font-size: 0.92rem; font-weight: 600; color: var(--text);">
+          Recommended Classroom Accommodations:
+        </div>
+        <ul class="accommodations-list" id="accommodations-list">
+          <!-- populated dynamically -->
+        </ul>
+      </div>
+
+      <!-- teacher observations remarks -->
+      <div class="remarks-section">
+        <h4
+          style="font-size: 0.88rem; margin-bottom: 8px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px;">
+          Teacher Remarks & Observations:
+        </h4>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <input type="text" id="new-remark-text" class="form-input" placeholder="Add an observation note..."
+            style="flex-grow: 1;">
+          <button id="btn-add-remark" class="btn btn-primary btn-sm">
+            <span>Add Remark</span>
+          </button>
+        </div>
+
+        <div class="remarks-list" id="remarks-list-container">
+          <!-- remarks rendered dynamically -->
+        </div>
+      </div>
+
+      <div
+        style="display: flex; justify-content: flex-end; gap: 10px; margin-top: var(--space-24); padding-top: var(--space-16); border-top: 1px solid var(--border);">
+        <button class="btn btn-secondary btn-sm" onclick="closeStudentProfile()">Close Panel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- teacher self profile modal -->
+  <div id="modal-teacher-self-profile" class="modal-overlay">
+    <div class="modal-container" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="closeTeacherProfileModal()" aria-label="Close modal">✕</button>
+
+      <div style="text-align: center; margin-bottom: 22px;">
+        <div class="user-avatar" id="teacher-profile-modal-avatar"
+          style="width: 64px; height: 64px; font-size: 1.6rem; margin: 0 auto 12px auto; background: var(--primary);">T</div>
+        <h2 id="teacher-profile-modal-name-display" style="font-size: 1.35rem; margin-bottom: 4px;">Educator Profile</h2>
+        <span class="badge badge-success">Lead Educator</span>
+      </div>
+
+      <form id="form-update-teacher-profile" onsubmit="handleUpdateTeacherProfile(event)">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="teacher-profile-input-name">Full Name</label>
+          <input type="text" id="teacher-profile-input-name" class="form-input" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="teacher-profile-input-email">Email Address</label>
+          <input type="email" id="teacher-profile-input-email" class="form-input" readonly
+            style="background: var(--surface-soft); cursor: not-allowed;" title="Email cannot be changed">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="teacher-profile-input-password">Account Password</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="teacher-profile-input-password" class="form-input" style="padding-right: 42px;" placeholder="Password" required>
+            <button type="button" onclick="togglePasswordVisibility('teacher-profile-input-password', this)" style="position: absolute; right: 8px; background: none; border: none; cursor: pointer; color: var(--text-soft); padding: 4px; display: flex; align-items: center;" title="Show or hide password" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="teacher-profile-input-role">Designation / Role</label>
+          <input type="text" id="teacher-profile-input-role" class="form-input" placeholder="e.g. Lead Educator & Reading Specialist">
+        </div>
+
+        <div
+          style="background: var(--surface-soft); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.88rem; color: var(--text-soft);">Enrolled Students:</span>
+          <strong id="teacher-profile-students-count" style="font-size: 0.92rem; color: var(--primary);">0 Students Active</strong>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeTeacherProfileModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- script dependencies -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    // protect teacher dashboard
+    const teacherUser = protectPage("teacher");
+
+    if (teacherUser) {
+      document.getElementById("teacher-name-sidebar").textContent = teacherUser.name;
+      document.getElementById("teacher-avatar").textContent = teacherUser.name.charAt(0);
+    }
+
+    // toggle password visibility helper
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+      } else {
+        input.type = "password";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+      }
+    }
+
+    // open teacher profile modal
+    function openTeacherProfileModal() {
+      if (!teacherUser) return;
+      const modal = document.getElementById("modal-teacher-self-profile");
+      if (!modal) return;
+
+      const nameInput = document.getElementById("teacher-profile-input-name");
+      const emailInput = document.getElementById("teacher-profile-input-email");
+      const passInput = document.getElementById("teacher-profile-input-password");
+      const roleInput = document.getElementById("teacher-profile-input-role");
+      const avatarEl = document.getElementById("teacher-profile-modal-avatar");
+      const nameDisplay = document.getElementById("teacher-profile-modal-name-display");
+      const studentCountEl = document.getElementById("teacher-profile-students-count");
+
+      if (nameInput) nameInput.value = teacherUser.name || "";
+      if (emailInput) emailInput.value = teacherUser.email || "";
+      if (passInput) {
+        passInput.value = teacherUser.password || "teacher123";
+        passInput.type = "password";
+      }
+      if (roleInput) roleInput.value = teacherUser.roleTitle || "Lead Educator & Reading Specialist";
+      if (avatarEl) avatarEl.textContent = (teacherUser.name || "T").charAt(0).toUpperCase();
+      if (nameDisplay) nameDisplay.textContent = teacherUser.name || "Educator Profile";
+
+      const students = getAllStudents();
+      if (studentCountEl) studentCountEl.textContent = `${students.length} Students Active`;
+
+      modal.classList.add("active");
+    }
+
+    // close teacher profile modal
+    function closeTeacherProfileModal() {
+      const modal = document.getElementById("modal-teacher-self-profile");
+      if (modal) modal.classList.remove("active");
+    }
+
+    // handle update teacher profile
+    function handleUpdateTeacherProfile(e) {
+      e.preventDefault();
+      if (!teacherUser) return;
+
+      const newName = document.getElementById("teacher-profile-input-name").value.trim();
+      const newPass = document.getElementById("teacher-profile-input-password").value.trim();
+      const newRole = document.getElementById("teacher-profile-input-role").value.trim();
+
+      if (!newName) {
+        showToast("Please enter your name", "warning");
+        return;
+      }
+
+      if (!newPass || newPass.length < 4) {
+        showToast("Password must be at least 4 characters", "warning");
+        return;
+      }
+
+      teacherUser.name = newName;
+      teacherUser.password = newPass;
+      if (newRole) teacherUser.roleTitle = newRole;
+
+      // save current user session
+      setCurrentUser(teacherUser);
+
+      // update in users storage
+      const users = getAllUsers();
+      const idx = users.findIndex(u => u.id === teacherUser.id);
+      if (idx >= 0) {
+        users[idx].name = newName;
+        users[idx].password = newPass;
+        if (newRole) users[idx].roleTitle = newRole;
+        setData("lexilens_users", users);
+      }
+
+      // update UI elements
+      const sidebarName = document.getElementById("teacher-name-sidebar");
+      const sidebarAvatar = document.getElementById("teacher-avatar");
+      if (sidebarName) sidebarName.textContent = newName;
+      if (sidebarAvatar) sidebarAvatar.textContent = newName.charAt(0).toUpperCase();
+
+      closeTeacherProfileModal();
+      showToast("Educator profile updated successfully!", "success");
+    }
+
+    // load dashboard view
+    window.addEventListener("DOMContentLoaded", () => {
+      initDashboard();
+
+      // re-render on resize
+      window.addEventListener("resize", () => {
+        renderBarChart();
+        renderDonutChart();
+      });
+    });
+  </script>
+</body>
+
+</html>
